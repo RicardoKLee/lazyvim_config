@@ -35,6 +35,30 @@ require("lazy").setup({
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
+  -- SSH 场景下终端字体由本机决定；无 Nerd Font 时用 ASCII 图标避免乱码
+  ui = {
+    icons = {
+      cmd = "[cmd] ",
+      config = "[cfg]",
+      debug = "[dbg]",
+      event = "[evt]",
+      favorite = "[*]",
+      ft = "[ft] ",
+      init = "[init]",
+      import = "[imp]",
+      keys = "[keys]",
+      lazy = "lazy ",
+      loaded = "+",
+      not_loaded = "-",
+      plugin = "plug ",
+      runtime = "[rt]",
+      require = "[req]",
+      source = "[src]",
+      start = "[start]",
+      task = "[ok] ",
+      list = { "+", ">", "*", "-" },
+    },
+  },
   performance = {
     rtp = {
       -- disable some rtp plugins
