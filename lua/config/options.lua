@@ -1,3 +1,6 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+if vim.env.TERM_PROGRAM == "Apple_Terminal" then
+  vim.opt.termguicolors = false
+else
+  vim.opt.termguicolors = true
+end
+vim.opt.background = "dark"
