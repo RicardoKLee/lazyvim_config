@@ -11,3 +11,21 @@ local cargo_bin = vim.fn.expand("~/.cargo/bin")
 if vim.fn.isdirectory(cargo_bin) == 1 then
   vim.env.PATH = cargo_bin .. ":" .. vim.env.PATH
 end
+
+vim.opt.clipboard = "unnamedplus"
+
+-- SSH 场景统一走 OSC 52（nvim 官方内置 provider）：
+--   - 复制：写入 OSC 52 -> Ghostty 默认 clipboard-write=allow，直接进客户端剪贴板
+--   - 粘贴：读取 OSC 52 -> Ghostty 默认 clipboard-read=ask，会弹窗确认一次
+-- 不再依赖 xclip：远程 X(:1) 剪贴板与客户端剪贴板无关，SSH 下读取永远拿不到内容。
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+  },
+  paste = {
+    ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+    ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+  },
+}
