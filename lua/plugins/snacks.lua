@@ -82,5 +82,13 @@ return {
       })
       return opts
     end,
+    keys = {
+      { "<leader><space>", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>/", LazyVim.pick("grep", { root = false }), desc = "Grep (cwd)" },
+      { "<leader>fg", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>ff", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+      { "<leader>sg", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
+      { "<leader>sw", LazyVim.pick("grep_word", { root = false }), desc = "Grep word (cwd)", mode = { "n", "x" } },
+    },
   },
 }
