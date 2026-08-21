@@ -27,12 +27,19 @@ local function parse_ref(ref)
 end
 
 --- Expand a path pattern (absolute, relative, or with `**`/`*` globs).
+--- Fast paths avoid full-tree `**` globs that freeze nvim on huge repos.
 ---@param pattern string
 ---@return string|nil absolute path of the first match
 local function resolve(pattern)
   pattern = pattern:gsub("^~", vim.fn.expand("~"))
-  local has_glob = pattern:find("[*?]") ~= nil
-  if not has_glob and pattern:sub(1, 1) ~= "/" then
+  -- `**/<static>` (no wildcard): prefer `<cwd>/<static>` without scanning the tree
+  local static = pattern:match("^%*%*/%s*(.-)%s*$")
+  if static and not static:find("[*?]") then
+    local joined = static:sub(1, 1) == "/" and static or vim.fs.joinpath(vim.fn.getcwd(), static)
+    if vim.fn.filereadable(joined) == 1 then
+      return normalize(joined)
+    end
+  elseif static == nil and pattern:sub(1, 1) ~= "/" and not pattern:find("[*?]") then
     local joined = vim.fs.joinpath(vim.fn.getcwd(), pattern)
     if vim.fn.filereadable(joined) == 1 then
       return normalize(joined)
@@ -57,11 +64,11 @@ function M.open(ref)
   local pattern, a, b = parse_ref(ref)
   local path = resolve(pattern)
   if not path then
-    vim.notify(("fref: no match for '%s'"):format(pattern), vim.log.levels.WARN)
+    vim.notify(("fref: no match for '%s'"):format(pattern), vim.log.levels.ERROR)
     return
   end
   if vim.fn.filereadable(path) == 0 then
-    vim.notify(("fref: not a readable file: %s"):format(path), vim.log.levels.WARN)
+    vim.notify(("fref: not a readable file: %s"):format(path), vim.log.levels.ERROR)
     return
   end
 
@@ -94,28 +101,21 @@ function M.open_under_cursor()
   M.open(word)
 end
 
---- Shortest unique `**/`-style glob for a file, resolved against the cwd.
+--- Reference path for a file: cwd-relative when under cwd, else absolute.
+--- Yanked refs are deterministic paths, no `**` globs.
 ---@param file string path to the file
 ---@return string
-local function relative_glob(file)
+local function reference_path(file)
   file = normalize(file)
-  if file:find("[*?%[%]{} ]") then
+  if file:find("[*?%[%]{}]") then
     return file
   end
   local cwd = normalize(vim.fn.getcwd())
   local rel = vim.fs.relpath(cwd, file)
-  if not rel or rel:sub(1, 1) == "/" then
-    return file
+  if rel and rel:sub(1, 1) ~= "/" then
+    return rel
   end
-  local segs = vim.split(rel, "/")
-  for i = #segs, 1, -1 do
-    local cand = "**/" .. table.concat(segs, "/", i)
-    local ok, matches = pcall(vim.fn.glob, cand, false, true)
-    if ok and #matches == 1 and normalize(matches[1]) == file then
-      return cand
-    end
-  end
-  return "**/" .. rel
+  return file
 end
 
 --- Build a `path:start-end` reference for a file/line range.
@@ -125,9 +125,9 @@ end
 ---@return string
 function M.make_reference(file, a, b)
   if b and b ~= a then
-    return string.format("%s:%d-%d", relative_glob(file), a, b)
+    return string.format("%s:%d-%d", reference_path(file), a, b)
   end
-  return string.format("%s:%d", relative_glob(file), a)
+  return string.format("%s:%d", reference_path(file), a)
 end
 
 --- Yank a reference for the current visual selection (or current line).
