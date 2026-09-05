@@ -5,7 +5,7 @@
   },
   "SchemaStore.nvim": {
     "branch": "main",
-    "commit": "73e89eb3e536a4dd8f991c963bd37189520c9919"
+    "commit": "4a0e1b74096937d366031bc1e2b244546af39f8e"
   },
   "blink.cmp": {
     "branch": "main",
@@ -17,7 +17,7 @@
   },
   "catppuccin": {
     "branch": "main",
-    "commit": "79e2049a0fdf7ec840f8463fe1d962c94493196b"
+    "commit": "edefef779ab08ce1a4a404713e3012b0d202bd35"
   },
   "clangd_extensions.nvim": {
     "branch": "main",
@@ -25,7 +25,7 @@
   },
   "conform.nvim": {
     "branch": "master",
-    "commit": "619363c30309d29ffa631e67c8183f2a72caa373"
+    "commit": "016802de402556da54c36bd7359b441266b01cdd"
   },
   "diffview.nvim": {
     "branch": "main",
@@ -33,7 +33,7 @@
   },
   "flash.nvim": {
     "branch": "main",
-    "commit": "b6346946d10d07998efee029fb0f7a593806d0cd"
+    "commit": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a"
   },
   "friendly-snippets": {
     "branch": "main",
@@ -45,11 +45,11 @@
   },
   "gitsigns.nvim": {
     "branch": "main",
-    "commit": "31d6fb2d618bca1482b9f274751ead5f03461408"
+    "commit": "5be654f2232c10ddcad19c1607a67b6b4b78fc29"
   },
   "grug-far.nvim": {
     "branch": "main",
-    "commit": "0f6a5d0d7a70659b11bbcd6b3673ee0fe61b6024"
+    "commit": "11595bf747edc270bce2069d1020502ad4ae56cf"
   },
   "lazy.nvim": {
     "branch": "main",
@@ -69,7 +69,7 @@
   },
   "mason-lspconfig.nvim": {
     "branch": "main",
-    "commit": "7adc933dabcc7c86ae6b07aff7ee68eac398491f"
+    "commit": "40276c4df7e6bdce6801d6c035c6227f9115a855"
   },
   "mason.nvim": {
     "branch": "main",
@@ -93,23 +93,23 @@
   },
   "nui.nvim": {
     "branch": "main",
-    "commit": "de740991c12411b663994b2860f1a4fd0937c130"
+    "commit": "10fc361835c856ba4233ef5ea135b919bf3dce97"
   },
   "nvim-lint": {
     "branch": "master",
-    "commit": "a219b2c9e5b4765e5c845aba119dad55806fcaf1"
+    "commit": "3d55c8f67c6ae5c15e1042571e107c7a3d5c5f4e"
   },
   "nvim-lspconfig": {
     "branch": "master",
-    "commit": "7ab79bb1b57160a537f427ac8a6026102f12b701"
+    "commit": "84252f9832fb5b9024fe9f7258e7c2aff915e6fb"
   },
   "nvim-treesitter": {
     "branch": "main",
-    "commit": "61df84986b4b4ec469ee745a182e433d49f8c27e"
+    "commit": "7caec274fd19c12b55902a5b795100d21531391f"
   },
   "nvim-treesitter-textobjects": {
     "branch": "main",
-    "commit": "898ee307df58f854d11cd7edd06472574d48014e"
+    "commit": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187"
   },
   "nvim-ts-autotag": {
     "branch": "main",
